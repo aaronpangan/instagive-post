@@ -1,13 +1,11 @@
 const express = require('express');
 
-
-
 const register = require('../routes/registerRoutes');
 
+module.exports = function (app) {
+  
+  app.use(express.json());
 
-module.exports = (app) => {
 
-app.use("/api/register", register);
-
-
-}
+  app.use("/api/register", register);
+};
