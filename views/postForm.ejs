@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FORM</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .wrapper {
+        width: 400px;
+        margin: 30px auto;
+        border: 2px gray solid;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .wrapper2 {
+        width: 400px;
+        margin: 30px auto;
+        border: 2px gray solid;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .form-input {
+        display: block;
+        margin: 15px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>CREATE POST</h1>
+      <form action="/user/create" method="post" enctype="multipart/form-data">
+        <input
+          type="text"
+          class="form-input"
+          name="title"
+          placeholder="Enter title"
+        />
+        <input
+          type="text"
+          class="form-input"
+          name="description"
+          placeholder="Enter description"
+        />
+
+        <input type="file" class="form-input" name="imagePost" id="imagePost" />
+
+        <button type="submit" class="form-input">Submit</button>
+      </form>
+    </div>
+
+    <div class="wrapper2">
+      <h1>POST LIST</h1>
+
+      <% item.map(items => { %>
+
+      <h1><%= items.Title%></h1>
+      <h1><%= items.description%></h1>
+      <img
+        style="width: 100%"
+        src="/<%=items.profilePic%>"
+        alt="<%=items.profilePic%>"
+      />
+
+      <hr />
+      <hr />
+
+      <% }); %>
+    </div>
+  </body>
+</html>

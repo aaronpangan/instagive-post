@@ -1,17 +1,19 @@
 const express = require('express');
 
-const register = require('../routes/registerRoutes');
+const register = require('../routes/userRoutes');
 
 module.exports = function (app, dir) {
   app.use(express.json());
 
+  // to render input on startup
+  app.get('/', (req, res) => {
+    res.render('index', { warning: '', active: false });
+  });
 
-// to render input on startup
-app.get('/', (req, res) => {
-  res.sendFile(dir +'/view/input.html');
-});
+  app.use('/user', register);
 
-
-
-  app.use('/api/register', register);
+  // Error
+  app.use((req, res, next) => {
+    res.status(404).send('PAGE NOT FOUND');
+  });
 };
