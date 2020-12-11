@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'public');
@@ -10,10 +10,19 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     cb(
       null,
-      file.fieldname + '-' +mongoose.Types.ObjectId() + path.extname(file.originalname)
+
+      file.fieldname +
+        '-' +
+        mongoose.Types.ObjectId() +
+        path.extname(file.originalname)
     );
   },
 });
+
+
+
+
+
 
 let upload = multer({
   storage: storage,
@@ -37,7 +46,7 @@ router.post(
   [
     userController.verifyCookie,
     userController.verifyToken,
-    upload.single('imagePost'),
+    upload.fields([{name: 'imagePost'}, {name: 'imageList'}]),
   ],
   postController.createPost
 );
@@ -45,3 +54,5 @@ router.post(
 router.get('/logout', userController.logout);
 
 module.exports = router;
+
+router.get('/', userController.home);

@@ -6,7 +6,7 @@ const postSchema = new mongoose.Schema({
   Title: String,
   datePosted: Date,
   profilePic: String,
-
+  imageList: [],
   description: String,
 });
 

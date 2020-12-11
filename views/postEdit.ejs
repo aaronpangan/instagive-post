@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FORM</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .wrapper {
+        width: 400px;
+        margin: 30px auto;
+        border: 2px gray solid;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .wrapper2 {
+        width: 400px;
+        margin: 30px auto;
+        border: 2px gray solid;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .form-input {
+        display: block;
+        margin: 15px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper2">
+      <h1>POST EDIT</h1>
+
+      <form
+        action="/user/post/edittext/<%=item._id%>"
+        method="POST"
+      >
+        <input
+          type="text"
+          class="form-input"
+          name="title"
+          value="<%= item.Title%>"
+        />
+        <input
+          type="text"
+          class="form-input"
+          name="description"
+          value="<%= item.description%>"
+        />
+
+        <button type="submit" class="form-input">EDIT</button>
+
+        
+      </form>
+
+      <form
+        action="/user/post/editprofilepic/<%=item._id%>"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <h2>Cover Photo</h2>
+        <a href="/<%=item.profilePic%>" target="_top">
+          <img
+            style="width: 100%"
+            src="/<%=item.profilePic%>"
+            alt="<%=item.profilePic%>"
+          />
+        </a>
+        <h4>Edit Cover Photo</h4>
+        <input type="file" name="imagePost" id="imagePost" required />
+
+        <button type="submit" class="form-input">Save Profile Picture</button>
+      </form>
+
+      <h2>Reference Pics</h2>
+
+      <%
+      
+      
+      
+      
+      item.imageList.map(items => { %>
+
+      <form
+        action="/user/post/editimagelist/<%=item._id%>/<%=items%>"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <a href="/<%=items%>" target="_top">
+          <img
+            style="width: 100%"
+            src="/<%=items%>"
+            alt="<%=items%>"
+          />
+        </a>
+        <h4>Delete Photo</h4>
+        <button type="submit" class="form-input">Delete Photo Above</button>
+
+    </form>
+
+      <% }) %>
+
+      <hr />
+      <hr />
+    </div>
+  </body>
+</html>

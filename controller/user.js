@@ -4,8 +4,6 @@ const jwt = require('jsonwebtoken');
 const bcyrpt = require('bcrypt');
 const Post = require('../model/postModel');
 
-
-
 exports.register = async (req, res) => {
   let user = await User.findOne({
     username: req.body.username,
@@ -48,27 +46,21 @@ exports.login = async (req, res) => {
   res.redirect('/user/home');
 };
 
+
+
+// Called by Login
 exports.home = async (req, res, next) => {
-  
   //res.send(req.user.id);
 
- 
   const post = await Post.find({
     User: req.user.id,
-
   });
 
+  res.render('postForm', { item: post });
 
-  res.render('postForm', ({item : post}));
- 
-
-
-
-
-
-
-// Query here to get all user post
+  // Query here to get all user post
 };
+
 
 
 
@@ -91,13 +83,10 @@ exports.logout = async (req, res) => {
   else res.render('index', { warning: 'You are not Logged In', active: false });
 };
 
-
 exports.verifyCookie = (req, res, next) => {
-  
   if (req.cookies.user) {
-        
-    next();}
-  else return res.render('index', { warning: 'Login First', active: false });
+    next();
+  } else return res.render('index', { warning: 'Login First', active: false });
 };
 
 exports.verifyToken = (req, res, next) => {

@@ -34,16 +34,44 @@
     </style>
   </head>
   <body>
-    
-
     <div class="wrapper2">
-      
+      <h1><%= post.Title%></h1>
+      <img
+      style="width: 100%"
+      src="/<%=post.profilePic%>"
+      alt="<%=post.profilePic%>"
+      />
+      <h1><%= post.description%></h1>
 
-        <h1><%= item.title%></h1>
-        <h1><%= item.description%></h1>
-        <img style="width: 100%;" src="/<%=image%>" alt="<%=image%>">
+      <h3>Photo Reference</h3>
 
-        
+
+      <% post.imageList.map(item => { %>
+
+
+        <a href="/<%=item%>" target="_top">
+          <img
+            style="width: 100%"
+            src="/<%=item%>"
+            alt="<%=item%>"
+          />
+        </a>
+        <hr />
+        <hr />
+        <br>
+        <br>
+
+
+
+
+
+
+    <%  }); %>
+
+
+
+
+
     </div>
   </body>
 </html>

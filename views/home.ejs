@@ -34,50 +34,26 @@
     </style>
   </head>
   <body>
-    <div class="wrapper">
-      <h1>CREATE POST</h1>
-      <form action="/user/create" method="post" enctype="multipart/form-data">
-        <input
-          type="text"
-          class="form-input"
-          name="title"
-          placeholder="Enter title"
-        />
-        <input
-          type="text"
-          class="form-input"
-          name="description"
-          placeholder="Enter description"
-        />
-
-        <input type="file" class="form-input" name="imagePost" id="imagePost" />
-
-        <input
-          type="file"
-          class="form-input"
-          name="imageList"
-          id="imageList"
-          multiple
-        />
-
-        <button type="submit" class="form-input">Submit</button>
-      </form>
-    </div>
+  
+      <h1 style="text-align: center;">WELCOME TO FUCKING INSTAGIVE</h1>
+     
+    
+      <h1 style="text-align: center;">POST LIST</h1>
 
     <div class="wrapper2">
-      <h1>POST LIST</h1>
 
       <% item.map(items => { %>
 
       <h1><%= items.Title%></h1>
       <h1><%= items.description%></h1>
-      <a href="/user/post/<%=items._id%>" target="_top">
+      <a href="/<%=items.profilePic%>" target="_top">
         <img
           style="width: 100%"
           src="/<%=items.profilePic%>"
           alt="<%=items.profilePic%>"
         />
       </a>
+            <h2>View Full Post</h2>
       <hr />
       <hr />
 
