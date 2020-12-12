@@ -1,10 +1,11 @@
-const { findById } = require('../model/postModel');
 const Post = require('../model/postModel');
+const fs = require('fs');
+const path = require('path');
 
 exports.createPost = async (req, res, next) => {
   const id = req.user.id;
   let imageList = [];
-  if (req.files['imageList'].length > 0) {
+  if (req.files['imageList']) {
     req.files['imageList'].forEach((name) => imageList.push(name.filename));
   }
 
@@ -43,54 +44,95 @@ exports.viewPost = async (req, res) => {
 exports.edittext = async (req, res) => {
   const postId = req.params.postId;
 
-  const post = await Post.findByIdAndUpdate(postId, {
-    Title: req.body.title,
-    description: req.body.description,
-  }, {new : true});
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    {
+      Title: req.body.title,
+      description: req.body.description,
+    },
+    { new: true }
+  );
 
+  await post.save();
 
-await post.save()
+  console.log(post);
 
-
-console.log(post)
-
-res.render('postEdit', {item: post})
-
-
-
-
-
+  res.render('postEdit', { item: post });
 };
 
 exports.editprofilepic = async (req, res) => {
-
-
   const postId = req.params.postId;
 
-  const post = await Post.findByIdAndUpdate(postId, {
-    profilePic: req.file.filename
-  }, {new : true});
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    {
+      profilePic: req.file.filename,
+    },
+    { new: true }
+  );
 
-  await post.save()
+  await post.save();
 
+  console.log(post.profilePic);
 
-  console.log(post.profilePic)
-  
-  res.render('postEdit', {item: post})
-  
+  try {
+    fs.unlinkSync(
+      `${path.dirname(require.main.filename)}/public/${req.body.oldimagePost}`
+    );
+    console.log('Success');
+  } catch (err) {
+    console.error(err);
+  }
 
+  res.render('postEdit', { item: post });
 };
-exports.editimagelist = async (req, res) => {
 
+// Delete Image List
+exports.editimagelist = async (req, res) => {
   const postId = req.params.postId;
   const imageName = req.params.imageName;
 
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    {
+      $pull: { imageList: imageName },
+    },
+    { new: true }
+  );
 
-  const post = await Post.findByIdAndUpdate(postId, {
-    $pull: {"imageList" : imageName} 
-  }, {new : true}) 
+  await post.save();
 
-await post.save()
+  try {
+    fs.unlinkSync(`${path.dirname(require.main.filename)}/public/${imageName}`);
+    console.log('Success');
+  } catch (err) {
+    console.error(err);
+  }
 
-  res.render('postEdit', {item : post})
+  res.render('postEdit', { item: post });
+};
+
+exports.addrefpic = async (req, res) => {
+  const postId = req.params.postId;
+
+  let imageList = [];
+  req.files.forEach((name) => imageList.push(name.filename));
+
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    {
+      $push: { imageList: imageList },
+    },
+    { new: true }
+  );
+
+  await post.save();
+
+  console.log(post.imageList);
+
+
+
+
+  
+  res.send(post);
 };

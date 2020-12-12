@@ -37,10 +37,7 @@
     <div class="wrapper2">
       <h1>POST EDIT</h1>
 
-      <form
-        action="/user/post/edittext/<%=item._id%>"
-        method="POST"
-      >
+      <form action="/user/post/edittext/<%=item._id%>" method="POST">
         <input
           type="text"
           class="form-input"
@@ -55,8 +52,6 @@
         />
 
         <button type="submit" class="form-input">EDIT</button>
-
-        
       </form>
 
       <form
@@ -74,18 +69,24 @@
         </a>
         <h4>Edit Cover Photo</h4>
         <input type="file" name="imagePost" id="imagePost" required />
-
+        <input type="hidden" name="oldimagePost" value="<%=item.profilePic%>">
         <button type="submit" class="form-input">Save Profile Picture</button>
       </form>
 
       <h2>Reference Pics</h2>
 
-      <%
-      
-      
-      
-      
-      item.imageList.map(items => { %>
+      <form
+        action="/user/post/addrefpic/<%=item._id%>"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <h4>Add Reference Picture</h4>
+        <input type="file" name="imageList" id="imageList" multiple required />
+
+        <button type="submit" class="form-input">Save Pictures</button>
+      </form>
+
+      <% item.imageList.map(items => { %>
 
       <form
         action="/user/post/editimagelist/<%=item._id%>/<%=items%>"
@@ -93,16 +94,11 @@
         enctype="multipart/form-data"
       >
         <a href="/<%=items%>" target="_top">
-          <img
-            style="width: 100%"
-            src="/<%=items%>"
-            alt="<%=items%>"
-          />
+          <img style="width: 100%" src="/<%=items%>" alt="<%=items%>" />
         </a>
         <h4>Delete Photo</h4>
         <button type="submit" class="form-input">Delete Photo Above</button>
-
-    </form>
+      </form>
 
       <% }) %>
 

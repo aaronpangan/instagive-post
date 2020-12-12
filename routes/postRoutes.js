@@ -37,4 +37,10 @@ router.post(
 );
 router.post('/editimagelist/:postId/:imageName', postController.editimagelist);
 
+router.post(
+  '/addrefpic/:postId',
+  upload.array('imageList'),
+  postController.addrefpic
+);
+
 module.exports = router;
