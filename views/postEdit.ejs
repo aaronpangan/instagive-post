@@ -69,7 +69,7 @@
         </a>
         <h4>Edit Cover Photo</h4>
         <input type="file" name="imagePost" id="imagePost" required />
-        <input type="hidden" name="oldimagePost" value="<%=item.profilePic%>">
+        <input type="hidden" name="oldimagePost" value="<%=item.profilePic%>" />
         <button type="submit" class="form-input">Save Profile Picture</button>
       </form>
 
@@ -103,7 +103,51 @@
       <% }) %>
 
       <hr />
+      <br />
       <hr />
+
+      <form
+        action="/user/post/updates/<%=item._id%>"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <h2>Add Updates</h2>
+
+        <input
+          type="text"
+          name="updateDescription"
+          id="updateDescription"
+          required
+        />
+        <input type="file" name="imageList" id="imageList" multiple />
+
+        <button type="submit" class="form-input">Add Updates</button>
+      </form>
+
+
+      <% updates.map(item => {%>  
+
+        <h2>UPDATE DATE <%=item.datePosted%></h2>
+      <form
+        action="/user/post/deleteUpdates/<%=item._id%>/<%=item._id%>"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <input
+          type="text"
+          name="updatesDescription"
+          id="updatesDescription"
+          value="<%=item.description%>"
+        />
+        <% item.imageList.map(items => { %>
+        <a href="/<%=items%>" target="_top">
+          <img style="width: 100%" src="/<%=items%>" alt="<%=items%>" />
+        </a>
+        <% }) %>
+        <h4>Delete Update</h4>
+        <button type="submit" class="form-input">Delete Update</button>
+      </form>
+      <% }) %>
     </div>
   </body>
 </html>

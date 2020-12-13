@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FORM</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .wrapper {
+        width: 400px;
+        margin: 30px auto;
+        border: 2px gray solid;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .wrapper2 {
+        width: 400px;
+        margin: 30px auto;
+        border: 2px gray solid;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .form-input {
+        display: block;
+        margin: 15px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center"><%= item.Title%></h1>
+
+    <form
+      action="/landing/sample/donate/%<= item._id %>"
+      method="post"
+    >
+  
+  
+      <input type="number" name="amount" id="amount" required >
+          <h2>Donate </h2>
+          <input type="submit">
+  
+  </form>
+    <div class="wrapper2">
+
+      <h4>Date Posted: <%=item.datePosted%></h4>
+      <h1><%= item.description%></h1>
+      <a href="/<%=item.profilePic%>" target="_top">
+        <img
+          style="width: 100%"
+          src="/<%=item.profilePic%>"
+          alt="<%=item.profilePic%>"
+        />
+      </a>
+      <h2>Reference Pics</h2>
+
+      <% item.imageList.map(pics => { %>
+      <a href="/<%=pics%>" target="_top">
+        <img style="width: 100%" src="/<%=pics%>" alt="<%=pics%>" />
+      </a>
+      <hr />
+      <br />
+      <% }) %> <% updates.map(items => { %>
+
+      <h2>UPDATE DATE <%=items.datePosted%></h2>
+
+      <h2><%=items.description%></h2>
+
+      <% items.imageList.map(pic => { %>
+
+      <a href="/<%=pic%>" target="_top">
+        <img style="width: 100%" src="/<%=pic%>" alt="<%=pic%>" />
+      </a>
+
+      <hr />
+      <hr />
+      <% }); %> <% }); %>
+    </div>
+  </body>
+</html>

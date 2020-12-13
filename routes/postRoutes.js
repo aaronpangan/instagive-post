@@ -5,6 +5,8 @@ const multer = require('multer');
 const path = require('path');
 const mongoose = require('mongoose');
 
+
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'public');
@@ -25,6 +27,8 @@ let upload = multer({
   storage: storage,
 });
 
+
+router.get('/sample/:postId', postController.landingViewPost)
 router.get('/', postController.home);
 
 router.get('/:postId', postController.viewPost);
@@ -42,5 +46,27 @@ router.post(
   upload.array('imageList'),
   postController.addrefpic
 );
+
+
+router.post(
+  '/updates/:postId',
+  upload.array('imageList'),
+  postController.addupdates
+);
+
+router.post(
+  '/deleteUpdates/:postId/:updatesId',
+  upload.array('imageList'),
+  postController.deleteUpdates
+);
+
+
+
+
+
+
+
+
+
 
 module.exports = router;
