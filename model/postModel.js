@@ -8,6 +8,9 @@ const postSchema = new mongoose.Schema({
   profilePic: String,
   imageList: [],
   description: String,
+  totalAmount: Number,
+  currentAmount: Number,
+  totalDonors: Number
 });
 
 const Post = mongoose.model('post', postSchema);

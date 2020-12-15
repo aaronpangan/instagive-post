@@ -3,6 +3,8 @@ const User = require('../model/userModel');
 const jwt = require('jsonwebtoken');
 const bcyrpt = require('bcrypt');
 const Post = require('../model/postModel');
+const Request = require('../model/requestModel');
+const nodemailer = require('nodemailer');
 
 exports.register = async (req, res) => {
   let user = await User.findOne({
@@ -46,8 +48,6 @@ exports.login = async (req, res) => {
   res.redirect('/user/home');
 };
 
-
-
 // Called by Login
 exports.home = async (req, res, next) => {
   //res.send(req.user.id);
@@ -60,20 +60,6 @@ exports.home = async (req, res, next) => {
 
   // Query here to get all user post
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 exports.logout = async (req, res) => {
   if (req.cookies.user)
@@ -98,4 +84,85 @@ exports.verifyToken = (req, res, next) => {
   } catch (err) {
     return res.status(404).send('INVALID JWT');
   }
+};
+
+exports.renderRequest = async (req, res) => {
+  res.render('requestAccount');
+};
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'instagive2021@gmail.com',
+    pass: 'Instagivethesis2021',
+  },
+});
+
+exports.requestAccount = async (req, res) => {
+  const {
+    email,
+    password,
+    city,
+    region,
+    zipcode,
+    orgName,
+    orgAddress,
+    orgNumber,
+    repName,
+    orgDescriptions,
+  } = req.body;
+
+  let documents = [];
+
+  req.files['orgDocuments'].forEach((files) => {
+    documents.push(files.filename);
+  });
+
+  let docpaths = req.files['orgDocuments'].forEach((files) => {
+    return {filename: files.filename, path: files.path}
+  });
+
+  const request = await new Request({
+    email: email,
+    password: password,
+    city: city,
+    region: region,
+    zipcode: zipcode,
+    orgName: orgName,
+    orgAddress: orgAddress,
+    orgPhoto: req.files['orgPhoto'][0].filename,
+    orgNumber: orgNumber,
+    repName: repName,
+    repId: req.files['repId'][0].filename,
+    orgDocuments: documents,
+    orgDescriptions: orgDescriptions,
+  });
+
+  await request.save();
+
+  let mailOptions = {
+    from: email,
+    to: 'instagive2021@gmail.com',
+    subject: 'Test',
+    text: orgDescriptions,
+    attachments: [
+      {
+        filename: req.files['orgPhoto'][0].filename,
+        path: req.files['orgPhoto'][0].path,
+      },
+      {filename: req.files['repId'][0].filename, path: req.files['repId'][0].path },
+      {docpaths}
+   
+    ],
+  };
+
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('MESSAGE SENT!!');
+    }
+  });
+
+  res.send(request);
 };

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FORM</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .wrapper {
+        width: 400px;
+        margin: 30px auto;
+        border: 2px gray solid;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .wrapper2 {
+        width: 400px;
+        margin: 30px auto;
+        border: 2px gray solid;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .form-input {
+        display: block;
+        margin: 15px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>REQUEST ACCOUNT</h1>
+      <form action="/request" method="post" enctype="multipart/form-data">
+        <input
+          type="email"
+          class="form-input"
+          name="email"
+          placeholder="Enter Email"
+          required
+        />
+        <input
+          type="text"
+          class="form-input"
+          name="password"
+          placeholder="Enter password"
+          required
+        />
+
+        <input
+          type="text"
+          class="form-input"
+          name="city"
+          placeholder="Enter city"
+          required
+        />
+
+        <input
+          type="text"
+          class="form-input"
+          name="region"
+          placeholder="Enter region"
+          required
+        />
+        <input
+          type="num"
+          class="form-input"
+          name="zipcode"
+          placeholder="Enter zipcode"
+          required
+        />
+
+        <input
+          type="text"
+          class="form-input"
+          name="orgName"
+          placeholder="Enter Organization Name"
+          required
+        />
+
+        <input
+          type="text"
+          class="form-input"
+          name="orgAddress"
+          placeholder="Enter Organization Address"
+          required
+        />
+        <label for="orgPhoto">UPLOAD ORG PHOTO</label>
+
+        <input type="file" class="form-input" name="orgPhoto" required />
+
+        <input
+          type="number"
+          class="form-input"
+          name="orgNumber"
+          placeholder="Enter Contact Number"
+          required
+        />
+
+        <input
+          type="text"
+          class="form-input"
+          name="repName"
+          placeholder="Enter Representative Name"
+          required
+        />
+
+        <label for="repId">UPLOAD REPRESENTATIVE ID:</label>
+
+        <input type="file" class="form-input" name="repId" required />
+
+
+
+<label for="orgDocuments">UPLOAD DOCUMENTS</label>
+        <input
+          type="file"
+          class="form-input"
+          name="orgDocuments"
+          required
+          multiple
+        />
+
+        <input
+          type="text"
+          class="form-input"
+          name="orgDescriptions"
+          placeholder="Enter Organization Description"
+          required
+        />
+
+        <button type="submit" class="form-input">Submit</button>
+      </form>
+    </div>
+  </body>
+</html>

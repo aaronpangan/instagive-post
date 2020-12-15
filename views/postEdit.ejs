@@ -35,6 +35,11 @@
   </head>
   <body>
     <div class="wrapper2">
+      <h3>Goal Amount: <%=item.totalAmount%></h3>
+      <h3>Current Amount: <%=item.currentAmount%></h3>
+      <h3>Total Donors: <%=item.totalDonors%></h3>
+      <h3>Date Created: <%=item.datePosted%></h3>
+
       <h1>POST EDIT</h1>
 
       <form action="/user/post/edittext/<%=item._id%>" method="POST">
@@ -124,10 +129,9 @@
         <button type="submit" class="form-input">Add Updates</button>
       </form>
 
+      <% updates.map(item => {%>
 
-      <% updates.map(item => {%>  
-
-        <h2>UPDATE DATE <%=item.datePosted%></h2>
+      <h2>UPDATE DATE <%=item.datePosted%></h2>
       <form
         action="/user/post/deleteUpdates/<%=item._id%>/<%=item._id%>"
         method="post"

@@ -3,36 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const Updates = require('../model/updatesModel');
 
+exports.landingViewPost = async (req, res) => {
+  const id = req.params.postId;
 
+  const post = await Post.findById(id);
 
-
-
-
-exports.landingViewPost = async (req,res) => {
-
-const id = req.params.postId;
-
-
-const post = await Post.findById(id);
-
-
-res.render('donatePost', {item: post, updates: await returnUpdates(id)})
-
-
-  
-}
-
-
-
-
-
-
-
-
-
-
-
-
+  res.render('donatePost', { item: post, updates: await returnUpdates(id) });
+};
 
 exports.createPost = async (req, res, next) => {
   const id = req.user.id;
@@ -48,6 +25,9 @@ exports.createPost = async (req, res, next) => {
     profilePic: req.files['imagePost'][0].filename,
     imageList: imageList,
     description: req.body.description,
+    totalAmount: req.body.totalAmount,
+    currentAmount: 0,
+    totalDonors: 0,
   });
 
   await post.save();
@@ -201,7 +181,7 @@ exports.addupdates = async (req, res) => {
 exports.deleteUpdates = async (req, res) => {
   const update = await Updates.findByIdAndDelete(req.params.updatesId);
 
-  res.send('Update Successfuly Deleted')
+  res.send('Update Successfuly Deleted');
 };
 
 async function returnPost(id) {

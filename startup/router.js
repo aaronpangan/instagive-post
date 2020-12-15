@@ -2,6 +2,8 @@ const express = require('express');
 
 const register = require('../routes/userRoutes');
 const home = require('../routes/postRoutes');
+const request = require('../routes/accountRoutes')
+
 
 module.exports = function (app, dir) {
   app.use(express.json());
@@ -16,6 +18,9 @@ module.exports = function (app, dir) {
   app.use('/user/post', home);
   app.use('/user', register);
   app.use('/landing', home);
+  app.use('/request', request)
+
+
 
   // Error
   app.use((req, res, next) => {

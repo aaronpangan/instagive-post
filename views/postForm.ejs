@@ -52,7 +52,21 @@
           required
         />
 
-        <input type="file" class="form-input" name="imagePost" id="imagePost" required />
+        <input
+          type="number"
+          class="form-input"
+          name="totalAmount"
+          placeholder="Enter totalAmount"
+          required
+        />
+
+        <input
+          type="file"
+          class="form-input"
+          name="imagePost"
+          id="imagePost"
+          required
+        />
 
         <input
           type="file"
@@ -73,6 +87,8 @@
 
       <h1><%= items.Title%></h1>
       <h1><%= items.description%></h1>
+      <h3>GOAL AMOUNT: <%=items.totalAmount%></h3>
+      <h3>CURRENT AMOUNT: <%=items.currentAmount%></h3>
       <a href="/user/post/<%=items._id%>" target="_top">
         <img
           style="width: 100%"
