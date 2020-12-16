@@ -3,6 +3,8 @@ const express = require('express');
 const register = require('../routes/userRoutes');
 const home = require('../routes/postRoutes');
 const request = require('../routes/accountRoutes')
+const donate = require('../routes/donateRoutes')
+const admin = require('../routes/adminRoutes')
 
 
 module.exports = function (app, dir) {
@@ -19,8 +21,8 @@ module.exports = function (app, dir) {
   app.use('/user', register);
   app.use('/landing', home);
   app.use('/request', request)
-
-
+  app.use('/donate', donate)
+  app.use('/admin', admin)
 
   // Error
   app.use((req, res, next) => {

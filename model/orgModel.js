@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
-const requestSchema = new mongoose.Schema({
+const orgSchema = new mongoose.Schema({
   email: {
     type: String,
   },
@@ -14,13 +14,11 @@ const requestSchema = new mongoose.Schema({
   orgPhoto: String,
   orgNumber: Number,
   repName: String,
-  repId: String,
-  orgDocuments: [],
   orgDescriptions: String,
-
-  accountStatus: String,
+  totalPost: Number,
+  totalDonors: Number,
 });
 
-const Request = mongoose.model('accounts', requestSchema);
+const Orgs = mongoose.model('approvedAccounts', orgSchema);
 
-module.exports = Request;
+module.exports = Orgs;

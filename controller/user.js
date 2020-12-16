@@ -5,6 +5,7 @@ const bcyrpt = require('bcrypt');
 const Post = require('../model/postModel');
 const Request = require('../model/requestModel');
 const nodemailer = require('nodemailer');
+const sendgrid = require('@sendgrid/mail');
 
 exports.register = async (req, res) => {
   let user = await User.findOne({
@@ -98,6 +99,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+
+
 exports.requestAccount = async (req, res) => {
   const {
     email,
@@ -118,10 +121,24 @@ exports.requestAccount = async (req, res) => {
     documents.push(files.filename);
   });
 
-  let docpaths = req.files['orgDocuments'].forEach((files) => {
-    return {filename: files.filename, path: files.path}
+  let docs = req.files['orgDocuments'].map((files) => {
+    return {
+      filename: files.filename,
+      path: files.path,
+    };
   });
 
+  docs.push({
+    filename: req.files['orgPhoto'][0].filename,
+    path: req.files['orgPhoto'][0].path,
+  });
+
+  docs.push({
+    filename: req.files['repId'][0].filename,
+    path: req.files['repId'][0].path,
+  });
+
+  console.log(docs);
   const request = await new Request({
     email: email,
     password: password,
@@ -136,24 +153,31 @@ exports.requestAccount = async (req, res) => {
     repId: req.files['repId'][0].filename,
     orgDocuments: documents,
     orgDescriptions: orgDescriptions,
+    accountStatus: 'pending',
   });
 
   await request.save();
 
   let mailOptions = {
-    from: email,
+    from: 'instagive2021@gmail.com',
     to: 'instagive2021@gmail.com',
-    subject: 'Test',
-    text: orgDescriptions,
-    attachments: [
-      {
-        filename: req.files['orgPhoto'][0].filename,
-        path: req.files['orgPhoto'][0].path,
-      },
-      {filename: req.files['repId'][0].filename, path: req.files['repId'][0].path },
-      {docpaths}
-   
-    ],
+    subject:` REQUESTING ACCOUNT: ${email}`,
+    html: `<h2>${email}</h2>
+    <h2>${orgName}</h2>
+    <h2> ${orgAddress} </h2>
+    <h2> ${orgNumber} </h2>
+    <h2> ${city} </h2>
+    <h2> ${region} </h2>
+    <h2> ${zipcode} </h2>
+    <h2> ${repName} </h2>
+    <h2> ${orgDescriptions} </h2>
+
+
+
+
+
+    `,
+    attachments: docs,
   };
 
   transporter.sendMail(mailOptions, (err, info) => {

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FORM</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      .wrapper {
+        width: 400px;
+        margin: 30px auto;
+        border: 2px gray solid;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .wrapper2 {
+        width: 400px;
+        margin: 30px auto;
+        border: 2px gray solid;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .form-input {
+        display: block;
+        margin: 15px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center">ADMIN</h1>
+
+    <div class="wrapper2">
+      <h1>Pending</h1>
+    <% pending.map(request => { %>
+
+
+      <form action="/admin/<%= request._id %>" method="post">
+        <h2><%=request.email%></h2>
+        <h2><%=request.orgName%></h2>
+        <h2><%=request.orgNumber%></h2>
+
+        <input type="submit" class="form-input" name="submit" value="Approve" />
+        <input type="submit" class="form-input" name="submit" value="Reject" />
+      </form>
+
+      <% }) %>
+
+    </div>
+
+
+    <div class="wrapper2">
+      <h1>Approved</h1>
+    <% approved.map(request => { %>
+      
+        <h2><%=request.email%></h2>
+        <h2><%=request.orgName%></h2>
+        <h2><%=request.orgNumber%></h2
+  
+        <% }) %>
+  
+      </div>
+  
+  
+      <div class="wrapper2">
+        <h1>Rejected</h1>
+      <% rejected.map(request => { %>
+
+          <h2><%=request.email%></h2>
+          <h2><%=request.orgName%></h2>
+          <h2><%=request.orgNumber%></h2
+    
+          <% }) %>
+    
+        </div>
+    
+    
+      
+
+
+
+
+
+
+  </body>
+</html>

@@ -5,8 +5,11 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const methodOverride = require('method-override');
+const cors = require('cors')
 
 require('dotenv').config();
+app.use(cors())
+
 app.set('view engine', 'ejs');
 
 app.use(express.static(path.join(__dirname, 'public')));

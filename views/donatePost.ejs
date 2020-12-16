@@ -37,7 +37,7 @@
     <h1 style="text-align: center"><%= item.Title%></h1>
 
     <form
-      action="/landing/sample/donate/%<= item._id %>"
+      action="/donate/<%= item._id %>"
       method="post"
     >
     <h2>Donate </h2>
@@ -47,9 +47,10 @@
       <br>
       <input type="text" name="name" id="name" placeholder="Enter Name" required >
       <br>
-      <input type="email" name="email" id="amount" placeholder="Enter email" required >
+      <input type="email" name="email" id="email" placeholder="Enter email" required >
       <br>
-      
+      <input type="text" name="message" id="message" placeholder="Enter Message" required >
+      <br>
       <input type="submit" value="DONATE">
   
   
